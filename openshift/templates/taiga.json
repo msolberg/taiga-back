@@ -27,7 +27,10 @@
         "name": "${NAME}"
       },
       "stringData" : {
-        "django-secret-key" : "${DJANGO_SECRET_KEY}"
+        "django-secret-key" : "${DJANGO_SECRET_KEY}",
+        "DB_HOST" : "${DB_HOST}",
+        "DB_USERNAME" : "${DB_USERNAME}",
+        "DB_PASSWORD" : "${DB_PASSWORD}"
       }
     },
     {
@@ -48,20 +51,6 @@
           }
         ],
         "selector": {
-          "name": "${NAME}"
-        }
-      }
-    },
-    {
-      "kind": "Route",
-      "apiVersion": "v1",
-      "metadata": {
-        "name": "${NAME}"
-      },
-      "spec": {
-        "host": "${APPLICATION_DOMAIN}",
-        "to": {
-          "kind": "Service",
           "name": "${NAME}"
         }
       }
@@ -193,7 +182,7 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 3,
                   "httpGet": {
-                    "path": "/",
+                    "path": "/api/v1/",
                     "port": 8080
                   }
                 },
@@ -201,14 +190,41 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 30,
                   "httpGet": {
-                    "path": "/",
+                    "path": "/api/v1",
                     "port": 8080
                   }
                 },
                 "env": [
                   {
-                    "name": "APP_CONFIG",
-                    "value": "${APP_CONFIG}"
+                    "name": "DJANGO_SETTINGS_MODULE",
+                    "value": "openshift"
+                  },
+                  {
+                    "name": "DB_HOST",
+                    "valueFrom": {
+                      "secretKeyRef" : {
+                        "name" : "${NAME}",
+                        "key" : "DB_HOST"
+                      }
+                    }
+                  },
+                  {
+                    "name": "DB_USERNAME",
+                    "valueFrom": {
+                      "secretKeyRef" : {
+                        "name" : "${NAME}",
+                        "key" : "DB_USERNAME"
+                      }
+                    }
+                  },
+                  {
+                    "name": "DB_PASSWORD",
+                    "valueFrom": {
+                      "secretKeyRef" : {
+                        "name" : "${NAME}",
+                        "key" : "DB_PASSWORD"
+                      }
+                    }
                   },
                   {
                     "name": "DJANGO_SECRET_KEY",
@@ -293,9 +309,28 @@
       "from": "[a-zA-Z0-9]{40}"
     },
     {
-      "name": "APP_CONFIG",
-      "displayName": "Application Configuration File Path",
-      "description": "Relative path to Gunicorn configuration file (optional)."
+      "name": "DJANGO_SETTINGS_MODULE",
+      "displayName": "Configuration module",
+      "description": "Configuration module for taiga.",
+      "value": "openshift"
+    },
+    {
+      "name": "DB_HOST",
+      "displayName": "Database host",
+      "description": "Database host",
+      "value": "postgresql
+    },
+    {
+      "name": "DB_USERNAME",
+      "displayName": "Database username",
+      "description": "Database username",
+      "value": "postgresql
+    },
+    {
+      "name": "DB_PASSWORD",
+      "displayName": "Database password",
+      "description": "Database password",
+      "value": "postgresql
     },
     {
       "name": "DJANGO_SECRET_KEY",
