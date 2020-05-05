@@ -190,7 +190,7 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 30,
                   "httpGet": {
-                    "path": "/api/v1",
+                    "path": "/api/v1/",
                     "port": 8080
                   }
                 },
@@ -318,19 +318,19 @@
       "name": "DB_HOST",
       "displayName": "Database host",
       "description": "Database host",
-      "value": "postgresql
+      "value": "postgresql"
     },
     {
       "name": "DB_USERNAME",
       "displayName": "Database username",
       "description": "Database username",
-      "value": "postgresql
+      "value": "taiga"
     },
     {
       "name": "DB_PASSWORD",
       "displayName": "Database password",
       "description": "Database password",
-      "value": "postgresql
+      "value": "password"
     },
     {
       "name": "DJANGO_SECRET_KEY",
