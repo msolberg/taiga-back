@@ -40,24 +40,31 @@ DATABASES = {
     }
 }
 
-#SITES = {
-#    "api": {
-#       "scheme": "http",
-#       "domain": "localhost:8000",
-#       "name": "api"
-#    },
-#    "front": {
-#       "scheme": "http",
-#       "domain": "localhost:9001",
-#       "name": "front"
-#    },
-#}
+TAIGA_HOSTNAME = os.environ.get('TAIGA_HOSTNAME', "localhost:8000")
 
-#SITE_ID = "api"
+SITES = {
+    "api": {
+       "scheme": "http",
+       "domain": TAIGA_HOSTNAME,
+       "name": "api"
+    },
+    "front": {
+       "scheme": "http",
+       "domain": TAIGA_HOSTNAME,
+       "name": "front"
+    },
+}
+
+SITE_ID = "api"
 
 #MEDIA_ROOT = '/home/taiga/media'
 #STATIC_ROOT = '/home/taiga/static'
 
+# The absolute url is mandatory because attachments
+# urls depends on it. On production should be set
+# something like https://media.taiga.io/
+MEDIA_URL = "http://%s/media/"% (TAIGA_HOSTNAME,)
+STATIC_URL = "http://%s/static/"% (TAIGA_HOSTNAME,)
 
 #########################################
 ## THROTTLING
@@ -87,26 +94,17 @@ DATABASES = {
 ## MAIL SYSTEM SETTINGS
 #########################################
 
-#DEFAULT_FROM_EMAIL = "john@doe.com"
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', "john@doe.com")
 #CHANGE_NOTIFICATIONS_MIN_INTERVAL = 300 #seconds
 
-# EMAIL SETTINGS EXAMPLE
+# EMAIL SETTINGS
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #EMAIL_USE_TLS = False
 #EMAIL_USE_SSL = False # You cannot use both (TLS and SSL) at the same time!
-#EMAIL_HOST = 'localhost'
-#EMAIL_PORT = 25
-#EMAIL_HOST_USER = 'user'
-#EMAIL_HOST_PASSWORD = 'password'
-
-# GMAIL SETTINGS EXAMPLE
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_USE_TLS = True
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = 587
-#EMAIL_HOST_USER = 'youremail@gmail.com'
-#EMAIL_HOST_PASSWORD = 'yourpassword'
-
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
+EMAIL_PORT = os.environ.get('EMAIL_PORT', 25)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'user')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'password')
 
 #########################################
 ## REGISTRATION
