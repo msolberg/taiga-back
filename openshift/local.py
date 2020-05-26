@@ -98,13 +98,13 @@ DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', "john@doe.com")
 #CHANGE_NOTIFICATIONS_MIN_INTERVAL = 300 #seconds
 
 # EMAIL SETTINGS
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
 #EMAIL_USE_TLS = False
 #EMAIL_USE_SSL = False # You cannot use both (TLS and SSL) at the same time!
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'localhost')
 EMAIL_PORT = os.environ.get('EMAIL_PORT', 25)
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'user')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'password')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
 #########################################
 ## REGISTRATION
