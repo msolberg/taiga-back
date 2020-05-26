@@ -23,7 +23,7 @@ import os
 ## GENERIC
 #########################################
 
-#DEBUG = False
+DEBUG = os.environ.get('DEBUG', False)
 
 #ADMINS = (
 #    ("Admin", "example@example.com"),
